@@ -132,5 +132,60 @@
 </body>
 </html>
 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript Calculator with Plotting</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- Include Plotly -->
+</head>
+<body>
+    <h1>Non-Linear Calculator</h1>
+    <form id="calculatorForm">
+        Amplitude (A): <input type="number" id="amplitude" value="1" step="0.1"><br>
+        Frequency (B): <input type="number" id="frequency" value="1" step="0.1"><br>
+        Phase Shift (C): <input type="number" id="phaseShift" value="0" step="0.1"><br>
+        X Min: <input type="number" id="xMin" value="-10"><br>
+        X Max: <input type="number" id="xMax" value="10"><br>
+        <button type="button" onclick="calculateAndPlot()">Calculate & Plot</button>
+    </form>
+    <div id="plot"></div> <!-- Container for the plot -->
+</body>
+</html>
 
+<script>
+    function calculateAndPlot() {
+        // Retrieve values from input fields
+        const amplitude = parseFloat(document.getElementById("amplitude").value);
+        const frequency = parseFloat(document.getElementById("frequency").value);
+        const phaseShift = parseFloat(document.getElementById("phaseShift").value);
+        const xMin = parseFloat(document.getElementById("xMin").value);
+        const xMax = parseFloat(document.getElementById("xMax").value);
+        
+        // Generate x and y values within range
+        const xValues = [];
+        const yValues = [];
+        
+        for (let x = xMin; x <= xMax; x += 0.1) {
+            xValues.push(x);
+            const y = amplitude * Math.sin(frequency * x + phaseShift);
+            yValues.push(y);
+        }
+        
+        // Plot using Plotly
+        const trace = {
+            x: xValues,
+            y: yValues,
+            mode: 'lines',
+            name: 'y = A*sin(Bx + C)'
+        };
+        
+        const layout = {
+            title: 'Plot of y = A*sin(Bx + C)',
+            xaxis: {title: 'X-axis'},
+            yaxis: {title: 'Y-axis'}
+        };
+        
+        Plotly.newPlot('plot', [trace], layout);
+    }
+</script>
 
