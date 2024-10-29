@@ -153,6 +153,39 @@
 </html>
 
 
+<script>
+    function calculateAndPlot() {
+        // Retrieve values from input fields
+        const amplitude = parseFloat(document.getElementById("amplitude").value);
+        const frequency = parseFloat(document.getElementById("frequency").value);
+        const phaseShift = parseFloat(document.getElementById("phaseShift").value);
+        const xMin = parseFloat(document.getElementById("xMin").value);
+        const xMax = parseFloat(document.getElementById("xMax").value);
+        
+        // Generate x and y values within range
+        const xValues = [];
+        const yValues = [];
+        
+        for (let x = xMin; x <= xMax; x += 0.1) {
+            xValues.push(x);
+            const y = amplitude * Math.sin(frequency * x + phaseShift);
+            yValues.push(y);
+        }
+        
+        // Plot using Plotly
+        const trace = {
+            x: xValues,
+            y: yValues,
+            mode: 'lines',
+            name: 'y = A*sin(Bx + C)'
+        };
+        
+        const layout = {
+            title: 'Plot of y = A*sin(Bx + C)',
+            xaxis: {title: 'X-axis'},
+            yaxis: {title: 'Y-axis'}
+        };
+        
         Plotly.newPlot('plot', [trace], layout);
     }
 </script>
