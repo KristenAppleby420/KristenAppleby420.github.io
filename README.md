@@ -132,63 +132,59 @@
 </body>
 </html>
 
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Damped Oscillator Calculator</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <meta charset="UTF-8">
+  <title>JavaScript Calculator with Plotting</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-    <h1>Damped Oscillator Calculator</h1>
-    <form id="oscillatorForm">
-        <label>Amplitude (A): <input type="number" id="amplitude" value="1" step="0.1"></label><br>
-        <label>Damping Coefficient (α): <input type="number" id="damping" value="0.1" step="0.01"></label><br>
-        <label>Angular Frequency (ω): <input type="number" id="frequency" value="1" step="0.1"></label><br>
-        <label>Phase Angle (φ): <input type="number" id="phase" value="0" step="0.1"></label><br>
-        <label>X-Range Start: <input type="number" id="xStart" value="0"></label><br>
-        <label>X-Range End: <input type="number" id="xEnd" value="10"></label><br>
-        <button type="button" onclick="plotOscillator()">Plot</button>
-    </form>
-    <div id="plot"></div>
-
-    <script src="oscillator.js"></script>
+  <h1>Projectile Motion Calculator</h1>
+  <form id="calcForm">
+    <label for="velocity">Initial Velocity (m/s):</label>
+    <input type="number" id="velocity" value="20"><br>
+    <label for="angle">Launch Angle (degrees):</label>
+    <input type="number" id="angle" value="45"><br>
+    <label for="range">Range of x (m):</label>
+    <input type="number" id="range" value="50"><br>
+    <button type="button" onclick="calculateAndPlot()">Calculate</button>
+  </form>
+  <div id="plot"></div>
+  <script src="calculator.js"></script>
 </body>
 </html>
 
+function calculateAndPlot() {
+  const velocity = parseFloat(document.getElementById("velocity").value);
+  const angle = parseFloat(document.getElementById("angle").value) * (Math.PI / 180); // Convert to radians
+  const range = parseFloat(document.getElementById("range").value);
+  const g = 9.8; // Gravity
 
-function plotOscillator() {
-    // Get values from the form
-    const A = parseFloat(document.getElementById("amplitude").value);
-    const alpha = parseFloat(document.getElementById("damping").value);
-    const omega = parseFloat(document.getElementById("frequency").value);
-    const phi = parseFloat(document.getElementById("phase").value);
-    const xStart = parseFloat(document.getElementById("xStart").value);
-    const xEnd = parseFloat(document.getElementById("xEnd").value);
+  const xValues = [];
+  const yValues = [];
 
-    // Generate x and y values for plotting
-    const xValues = [];
-    const yValues = [];
-    const step = 0.1; // Adjust for smoothness
-
-    for (let x = xStart; x <= xEnd; x += step) {
-        const y = A * Math.exp(-alpha * x) * Math.cos(omega * x + phi);
-        xValues.push(x);
-        yValues.push(y);
+  for (let x = 0; x <= range; x += 0.5) {
+    const y = x * Math.tan(angle) - (g * x ** 2) / (2 * velocity ** 2 * Math.cos(angle) ** 2);
+    if (y >= 0) { // Only plot points where the projectile is above the ground
+      xValues.push(x);
+      yValues.push(y);
     }
+  }
 
-    // Plot using Plotly
-    const trace = {
-        x: xValues,
-        y: yValues,
-        type: 'scatter'
-    };
+  const trace = {
+    x: xValues,
+    y: yValues,
+    mode: "lines",
+    type: "scatter",
+    name: "Projectile Path"
+  };
 
-    const layout = {
-        title: 'Damped Oscillator Plot',
-        xaxis: { title: 'x' },
-        yaxis: { title: 'y' }
-    };
+  const layout = {
+    title: "Projectile Motion Plot",
+    xaxis: { title: "Horizontal Distance (m)" },
+    yaxis: { title: "Vertical Height (m)" }
+  };
 
-    Plotly.newPlot('plot', [trace], layout);
+  Plotly.newPlot("plot", [trace], layout);
 }
