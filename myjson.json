@@ -1,0 +1,34 @@
+{
+	"players": [
+		{
+			"playerName": "John Doe",
+			"season": "2024",
+			"scores": [
+				15,
+				20,
+				25,
+				30
+			]
+		},
+		{
+			"playerName": "Jane Smith",
+			"season": "2024",
+			"scores": [
+				10,
+				18,
+				22,
+				28
+			]
+		},
+		{
+			"playerName": "Alice Johnson",
+			"season": "2024",
+			"scores": [
+				12,
+				17,
+				19,
+				24
+			]
+		}
+	]
+}
