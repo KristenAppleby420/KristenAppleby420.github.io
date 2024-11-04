@@ -273,3 +273,84 @@
   </script>
 </body>
 </html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Score Database</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Sports Score Database</h2>
+<table id="scoresTable">
+    <thead>
+        <tr>
+            <th>Player Name</th>
+            <th>Season</th>
+            <th>Scores</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script>
+$(document).ready(function() {
+    $.getJSON('myjson.json', function(data) {
+        let rows = '';
+        $.each(data.players, function(index, player) {
+            rows += `<tr>
+                        <td>${player.playerName}</td>
+                        <td>${player.season}</td>
+                        <td>${player.scores.join(', ')}</td>
+                     </tr>`;
+        });
+        $('#scoresTable tbody').append(rows);
+    });
+});
+</script>
+
+</body>
+</html>
