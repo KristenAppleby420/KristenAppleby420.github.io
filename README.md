@@ -437,7 +437,7 @@ $(document).ready(function() {
             shuffle(deck);
             for (let i = 0; i < 10; i++) { // Deal 10 cards
                 const card = document.createElement('img');
-                card.src = `path/to/cards/${deck[i]}.jpg`; // Replace with the correct path to your card images
+                card.src = `./cards/${deck[i]}.jpg`; // Path updated to './cards/'
                 card.alt = deck[i];
                 card.className = 'card';
                 card.draggable = true;
@@ -465,3 +465,4 @@ $(document).ready(function() {
     </script>
 </body>
 </html>
+
