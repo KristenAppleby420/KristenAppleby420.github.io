@@ -360,3 +360,63 @@ $(document).ready(function() {
 </body>
 </html>
 
+/ HTML and Canvas setup
+const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = 800;
+canvas.height = 600;
+
+// Object properties
+let ball = {
+  x: canvas.width / 2,
+  y: canvas.height / 2,
+  radius: 20,
+  dx: 3, // Horizontal velocity
+  dy: 3, // Vertical velocity
+  color: 'blue',
+};
+
+// Draw the ball
+function drawBall() {
+  ctx.beginPath();
+  ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+  ctx.fillStyle = ball.color;
+  ctx.fill();
+  ctx.closePath();
+}
+
+// Update ball position and handle collisions
+function updateBall() {
+  ball.x += ball.dx;
+  ball.y += ball.dy;
+
+  // Check for collisions with walls
+  if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+    ball.dx = -ball.dx; // Reverse horizontal direction
+  }
+  if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
+    ball.dy = -ball.dy; // Reverse vertical direction
+  }
+}
+
+// Handle mouse click event
+canvas.addEventListener('click', () => {
+  // Change the ball's color randomly on click
+  ball.color = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`;
+
+  // Optionally, reverse direction
+  ball.dx = -ball.dx;
+  ball.dy = -ball.dy;
+});
+
+// Animation loop
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+  drawBall();
+  updateBall();
+  requestAnimationFrame(animate); // Loop the animation
+}
+
+// Start the animation
+animate();
+
