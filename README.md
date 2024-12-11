@@ -354,3 +354,114 @@ $(document).ready(function() {
 
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop Card Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        #deck {
+            margin: 20px;
+        }
+
+        #card-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .card {
+            width: 80px;
+            height: 120px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: grab;
+        }
+
+        #discard {
+            margin-top: 20px;
+            width: 200px;
+            height: 150px;
+            border: 2px dashed #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #555;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Drag and Drop Card Game</h1>
+    <button id="deal">Deal Cards</button>
+
+    <div id="card-area"></div>
+
+    <div id="discard">Discard Pile</div>
+
+    <script>
+        const cardArea = document.getElementById('card-area');
+        const discardPile = document.getElementById('discard');
+        const dealButton = document.getElementById('deal');
+
+        // Array of card file names
+        const suits = ['S', 'H', 'D', 'C'];
+        const deck = [];
+        for (let suit of suits) {
+            for (let i = 1; i <= 13; i++) {
+                deck.push(`${suit}${i}`);
+            }
+        }
+
+        // Shuffle function
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Deal cards
+        dealButton.addEventListener('click', () => {
+            cardArea.innerHTML = ''; // Clear existing cards
+            shuffle(deck);
+            for (let i = 0; i < 10; i++) { // Deal 10 cards
+                const card = document.createElement('img');
+                card.src = `path/to/cards/${deck[i]}.jpg`; // Replace with the correct path to your card images
+                card.alt = deck[i];
+                card.className = 'card';
+                card.draggable = true;
+
+                // Drag start event
+                card.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', card.src);
+                });
+
+                cardArea.appendChild(card);
+            }
+        });
+
+        // Drag over discard pile
+        discardPile.addEventListener('dragover', (e) => {
+            e.preventDefault();
+        });
+
+        // Drop on discard pile
+        discardPile.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const cardSrc = e.dataTransfer.getData('text/plain');
+            alert(`Card discarded: ${cardSrc}`);
+        });
+    </script>
+</body>
+</html>
