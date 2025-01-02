@@ -354,7 +354,23 @@ $(document).ready(function() {
 
 </body>
 
-<a href="https://KristenAppleby420.github.io/web_development_career.html">Web Development Career Page</a>
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Example</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your external CSS file -->
+</head>
+<body>
+
+    <div class="link-container">
+        <a href="https://KristenAppleby420.github.io/web_development_career.html" class="styled-link">Visit Web Development Career Page</a>
+    </div>
+
+</body>
+</html>
 
 
 </html>
