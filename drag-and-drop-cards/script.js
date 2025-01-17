@@ -2,6 +2,7 @@ const deckArea = document.getElementById('deckArea');
 const discardPile = document.getElementById('discardPile');
 const dealButton = document.getElementById('dealButton');
 
+// Deck of cards
 const deck = [
     // Clubs
     '2_of_clubs.png', '3_of_clubs.png', '4_of_clubs.png', '5_of_clubs.png', 
@@ -28,43 +29,62 @@ const deck = [
     'ace_of_spades.png'
 ];
 
-// Shuffle the deck
+// Function to shuffle the deck
 function shuffleDeck(deck) {
     for (let i = deck.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
+        [deck[i], deck[j]] = [deck[j], deck[i]]; // Swap cards
     }
 }
 
-// Deal cards
+// Function to deal cards
 dealButton.addEventListener('click', () => {
-    deckArea.innerHTML = ''; // Clear any existing cards
+    // Clear the deck area
+    deckArea.innerHTML = '';
+
+    // Shuffle the deck
     shuffleDeck(deck);
-    deck.forEach(card => {
+
+    // Display the first 10 cards from the shuffled deck
+    deck.slice(0, 10).forEach(card => {
         const cardElement = document.createElement('img');
-        cardElement.src = `images/cards/${card}`;
+        cardElement.src = `cards/${card}`; // Ensure path is relative to the current folder
         cardElement.className = 'card';
         cardElement.draggable = true;
+
+        // Add dragstart event listener
         cardElement.addEventListener('dragstart', handleDragStart);
+
+        // Add card to the deck area
         deckArea.appendChild(cardElement);
     });
 });
 
-// Drag and drop functionality
+// Handle the dragstart event
 function handleDragStart(e) {
-    e.dataTransfer.setData('text/plain', e.target.src);
+    e.dataTransfer.setData('text/plain', e.target.src); // Store the card's source
 }
 
+// Allow dropping on the discard pile
 discardPile.addEventListener('dragover', (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default behavior
 });
 
+// Handle drop event on the discard pile
 discardPile.addEventListener('drop', (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent the default behavior
+
+    // Get the card source from the drag event
     const cardSrc = e.dataTransfer.getData('text/plain');
+
+    // Find the corresponding card element
     const card = document.querySelector(`img[src="${cardSrc}"]`);
+
     if (card) {
-        card.remove(); // Remove the card from the deck area
+        // Remove the card from the deck area
+        card.remove();
+
+        // Display a message
         alert('Card discarded!');
     }
 });
