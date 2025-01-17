@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin: 20px 0;
+}
+
+#dealButton {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#deckArea {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px auto;
+    border: 2px solid #333;
+    padding: 10px;
+    width: 90%;
+    background-color: #f8f8f8;
+    min-height: 200px;
+}
+
+#discardPile {
+    margin: 20px auto;
+    border: 2px dashed #333;
+    width: 300px;
+    height: 150px;
+    background-color: #ececec;
+    line-height: 150px;
+    text-align: center;
+    color: #555;
+}
+
+.card {
+    width: 80px;
+    height: 120px;
+    margin: 5px;
+    cursor: grab;
+    border: 1px solid #000;
+    background-color: white;
+}
