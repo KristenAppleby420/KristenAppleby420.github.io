@@ -37,42 +37,44 @@ function shuffleDeck(deck) {
     }
 }
 
-// Function to deal cards
+// Function to create a card element
+function createCardElement(card) {
+    const cardElement = document.createElement('img');
+    cardElement.src = `cards/${card}`; // Adjust path to match your folder structure
+    cardElement.className = 'card';
+    cardElement.draggable = true;
+
+    // Add dragstart event listener
+    cardElement.addEventListener('dragstart', handleDragStart);
+
+    return cardElement;
+}
+
+// Deal cards on button click
 dealButton.addEventListener('click', () => {
-    // Clear the deck area
-    deckArea.innerHTML = '';
+    deckArea.innerHTML = ''; // Clear the deck area
+    shuffleDeck(deck); // Shuffle the deck
 
-    // Shuffle the deck
-    shuffleDeck(deck);
-
-    // Display the first 10 cards from the shuffled deck
+    // Add the first 10 cards to the deck area
     deck.slice(0, 10).forEach(card => {
-        const cardElement = document.createElement('img');
-        cardElement.src = `cards/${card}`; // Ensure path is relative to the current folder
-        cardElement.className = 'card';
-        cardElement.draggable = true;
-
-        // Add dragstart event listener
-        cardElement.addEventListener('dragstart', handleDragStart);
-
-        // Add card to the deck area
+        const cardElement = createCardElement(card);
         deckArea.appendChild(cardElement);
     });
 });
 
-// Handle the dragstart event
+// Handle dragstart event
 function handleDragStart(e) {
     e.dataTransfer.setData('text/plain', e.target.src); // Store the card's source
 }
 
 // Allow dropping on the discard pile
 discardPile.addEventListener('dragover', (e) => {
-    e.preventDefault(); // Prevent the default behavior
+    e.preventDefault(); // Prevent default behavior to allow dropping
 });
 
 // Handle drop event on the discard pile
 discardPile.addEventListener('drop', (e) => {
-    e.preventDefault(); // Prevent the default behavior
+    e.preventDefault();
 
     // Get the card source from the drag event
     const cardSrc = e.dataTransfer.getData('text/plain');
@@ -81,10 +83,7 @@ discardPile.addEventListener('drop', (e) => {
     const card = document.querySelector(`img[src="${cardSrc}"]`);
 
     if (card) {
-        // Remove the card from the deck area
-        card.remove();
-
-        // Display a message
+        card.remove(); // Remove the card from the deck area
         alert('Card discarded!');
     }
 });
