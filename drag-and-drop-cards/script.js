@@ -63,17 +63,21 @@ dealButton.addEventListener('click', () => {
     });
 });
 
-// Handle drag and drop for the discard pile
 discardPile.addEventListener('dragover', (e) => {
-    e.preventDefault(); // Allow drop
+    e.preventDefault();
+    console.log('Dragging over the discard pile');
 });
 
 discardPile.addEventListener('drop', (e) => {
-    e.preventDefault(); // Prevent default behavior
+    e.preventDefault();
     const cardSrc = e.dataTransfer.getData('text/plain');
+    console.log(`Dropped card: ${cardSrc}`);
+
     const card = document.querySelector(`img[src="${cardSrc}"]`);
     if (card) {
-        card.remove(); // Remove the card from the deck area
+        card.remove();
         alert('Card discarded!');
+    } else {
+        console.error('Card not found:', cardSrc);
     }
 });
