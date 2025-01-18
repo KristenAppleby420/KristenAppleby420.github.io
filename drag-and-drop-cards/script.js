@@ -38,6 +38,7 @@ function shuffleDeck(deck) {
         const j = Math.floor(Math.random() * (i + 1));
         [deck[i], deck[j]] = [deck[j], deck[i]];
     }
+    console.log('Deck shuffled:', deck);
 }
 
 // Create a card element
@@ -54,6 +55,7 @@ function createCardElement(card) {
     });
 
     return cardElement;
+}
 
 dealButton.addEventListener('click', () => {
     deckArea.innerHTML = '';
