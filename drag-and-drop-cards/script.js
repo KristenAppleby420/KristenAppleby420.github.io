@@ -1,6 +1,9 @@
 const deckArea = document.getElementById('deckArea');
 const discardPile = document.getElementById('discardPile');
 const dealButton = document.getElementById('dealButton');
+const drawButton = document.getElementById('drawButton');
+const noDrawButton = document.getElementById('noDrawButton');
+
 
 const deck = [
     // Clubs
@@ -50,32 +53,26 @@ function createCardElement(card) {
     });
 
     return cardElement;
-}
 
-// Deal cards
-dealButton.addEventListener('click', () => {
-    deckArea.innerHTML = ''; // Clear previous cards
-    shuffleDeck(deck);
+// Player declines to draw
+noDrawButton.addEventListener('click', () => {
+    alert('You chose not to draw another card.');
+    // Optionally disable the buttons to prevent further actions
+    drawButton.disabled = true;
+    noDrawButton.disabled = true;
+});
 
-    // Add the first 10 cards to the deck area
-    deck.slice(0, 10).forEach(card => {
-        const cardElement = createCardElement(card);
-        deckArea.appendChild(cardElement);
-    });
+// Discard pile drag-and-drop functionality
+discardPile.addEventListener('dragover', (e) => {
+    e.preventDefault(); // Allow drop
 });
 
 discardPile.addEventListener('drop', (e) => {
     e.preventDefault();
     const cardSrc = e.dataTransfer.getData('text/plain');
-    console.log(`Dropped card source: ${cardSrc}`);
-
-    // Handle potential full URL discrepancies
-    const card = Array.from(deckArea.querySelectorAll('img')).find(img => img.src.includes(cardSrc.split('/').pop()));
+    const card = document.querySelector(`img[src="${cardSrc}"]`);
     if (card) {
-        console.log(`Removing card: ${card.src}`);
-        card.remove(); // Remove the card from the deck area
+        card.remove(); // Remove card from the deck area
         alert('Card discarded!');
-    } else {
-        console.error(`Card not found: ${cardSrc}`);
     }
 });
