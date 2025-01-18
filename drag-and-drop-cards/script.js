@@ -54,25 +54,57 @@ function createCardElement(card) {
 
     return cardElement;
 
-// Player declines to draw
+dealButton.addEventListener('click', () => {
+    deckArea.innerHTML = '';
+    deck = [...fullDeck]; // Reset deck
+    shuffleDeck(deck);
+
+    deck.slice(0, 10).forEach(card => {
+        const cardElement = createCardElement(card);
+        deckArea.appendChild(cardElement);
+    });
+
+    deck = deck.slice(10); // Remove dealt cards
+    drawButton.disabled = false;
+    noDrawButton.disabled = false;
+});
+
+// Draw another card
+drawButton.addEventListener('click', () => {
+    if (deck.length > 0) {
+        const card = deck.shift(); // Take the next card
+        const cardElement = createCardElement(card);
+        deckArea.appendChild(cardElement);
+    } else {
+        alert('No more cards in the deck!');
+        drawButton.disabled = true;
+    }
+});
+
+// Decline to draw
 noDrawButton.addEventListener('click', () => {
     alert('You chose not to draw another card.');
-    // Optionally disable the buttons to prevent further actions
     drawButton.disabled = true;
     noDrawButton.disabled = true;
 });
 
-// Discard pile drag-and-drop functionality
+// Discard pile drag-and-drop
 discardPile.addEventListener('dragover', (e) => {
-    e.preventDefault(); // Allow drop
+    e.preventDefault();
 });
 
 discardPile.addEventListener('drop', (e) => {
     e.preventDefault();
     const cardSrc = e.dataTransfer.getData('text/plain');
-    const card = document.querySelector(`img[src="${cardSrc}"]`);
+    const cardFileName = cardSrc.split('/').pop();
+    const card = Array.from(deckArea.querySelectorAll('img')).find(
+        img => img.src.includes(cardFileName)
+    );
+
     if (card) {
-        card.remove(); // Remove card from the deck area
+        card.remove();
         alert('Card discarded!');
+    } else {
+        console.error('Card not found in the deck area:', cardFileName);
     }
 });
