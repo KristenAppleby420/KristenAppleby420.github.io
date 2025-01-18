@@ -58,16 +58,29 @@ function createCardElement(card) {
 }
 
 dealButton.addEventListener('click', () => {
-    deckArea.innerHTML = '';
-    deck = [...fullDeck]; // Reset deck
-    shuffleDeck(deck);
+    console.log('Deal Cards button clicked'); // Debugging log
 
+    // Clear the deck area
+    deckArea.innerHTML = '';
+    console.log('Cleared deck area');
+
+    // Reset and shuffle the deck
+    deck = [...fullDeck];
+    shuffleDeck(deck);
+    console.log('Shuffled deck:', deck);
+
+    // Deal the first 10 cards
     deck.slice(0, 10).forEach(card => {
         const cardElement = createCardElement(card);
+        console.log('Dealing card:', card); // Debugging
         deckArea.appendChild(cardElement);
     });
 
-    deck = deck.slice(10); // Remove dealt cards
+    // Remove dealt cards from the deck
+    deck = deck.slice(10);
+    console.log('Remaining deck after dealing:', deck);
+
+    // Enable the draw/no-draw buttons
     drawButton.disabled = false;
     noDrawButton.disabled = false;
 });
@@ -78,6 +91,7 @@ drawButton.addEventListener('click', () => {
         const card = deck.shift(); // Take the next card
         const cardElement = createCardElement(card);
         deckArea.appendChild(cardElement);
+        console.log('Drew card:', card);
     } else {
         alert('No more cards in the deck!');
         drawButton.disabled = true;
