@@ -4,8 +4,9 @@ const dealButton = document.getElementById('dealButton');
 const drawButton = document.getElementById('drawButton');
 const noDrawButton = document.getElementById('noDrawButton');
 
+let deck = [];
 
-const deck = [
+const fullDeck = [
     // Clubs
     '2_of_clubs.png', '3_of_clubs.png', '4_of_clubs.png', '5_of_clubs.png', 
     '6_of_clubs.png', '7_of_clubs.png', '8_of_clubs.png', '9_of_clubs.png', 
