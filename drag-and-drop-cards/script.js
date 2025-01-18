@@ -46,6 +46,7 @@ function createCardElement(card) {
     // Add dragstart event
     cardElement.addEventListener('dragstart', (e) => {
         e.dataTransfer.setData('text/plain', cardElement.src);
+        console.log(`Dragging card: ${cardElement.src}`);
     });
 
     return cardElement;
