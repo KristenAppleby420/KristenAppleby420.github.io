@@ -20,7 +20,7 @@ button:disabled {
 }
 
 #discardPile {
-    margin: 20px 0;
+    margin: 20px auto;
     padding: 20px;
     border: 2px dashed red;
     width: 300px;
